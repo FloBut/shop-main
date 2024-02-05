@@ -10,6 +10,7 @@ public class Whishlist {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+
     private Long id;
 
 
@@ -19,9 +20,9 @@ public class Whishlist {
 
 
     @OneToOne
-    @JsonBackReference("user-whishlist")
+            @JsonBackReference("user-whishlist")
     @JoinColumn(name = "user_id")
-    private User user;
+    private User  user;
 
     public Whishlist() {
     }

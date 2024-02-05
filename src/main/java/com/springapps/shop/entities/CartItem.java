@@ -20,21 +20,11 @@ public class CartItem {
     @JoinColumn(name="user_id")
     @JsonBackReference("cartitem-user")
     private User user;
-    // o comanda poate avea mai multe
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    @JsonBackReference("cartitem-order")
-    private Order order;
 
     @Column
     private Integer quantity;
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
+    public CartItem() {
     }
 
     public Integer getQuantity() {

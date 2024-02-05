@@ -1,8 +1,6 @@
 package com.springapps.shop.dtos;
 
 public class ProductRequestDTO {
-
-
     private Double price;
     private String name;
     private Long categoryId;

@@ -1,12 +1,25 @@
 package com.springapps.shop.dtos;
 
-public class CartItemResponseDTO {
+public class OrderItemResponseDTO {
 
     private Long id;
     private Long productId;
+    private Long orderId;
     private String productName;
     private Integer quantity;
     private Double price;
+
+    public OrderItemResponseDTO() {
+    }
+
+    public OrderItemResponseDTO(Long id, Long productId, Long orderId, String productName, Integer quantity, Double price) {
+        this.id = id;
+        this.productId = productId;
+        this.orderId = orderId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
     public Long getId() {
         return id;
@@ -22,6 +35,14 @@ public class CartItemResponseDTO {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public String getProductName() {

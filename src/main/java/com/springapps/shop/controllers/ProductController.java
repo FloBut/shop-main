@@ -2,14 +2,13 @@ package com.springapps.shop.controllers;
 
 import com.springapps.shop.dtos.ProductRequestDTO;
 import com.springapps.shop.entities.Product;
+import com.springapps.shop.exceptions.ResourceNotFoundException;
 import com.springapps.shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/product")
@@ -22,8 +21,13 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Product> addProduct(@RequestBody ProductRequestDTO productRequestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.addProduct(productRequestDTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getById(@PathVariable Long id){
+        return ResponseEntity.ok(productService.findByid(id));
     }
 }

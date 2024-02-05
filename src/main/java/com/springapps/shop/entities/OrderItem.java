@@ -4,27 +4,56 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-public class OrderItem {
+public class Orderitem {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private Integer quantity;
+
+    @Column
+    private Double price;
+
+
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    @JsonBackReference("orderitem-product")
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name="order_id")
-    @JsonBackReference("orderItem-order")
+    @JsonBackReference("orderitem-order")
     private Order order;
 
-
-    @Column
-    private int quantity;
-
-    @Column
-    private double price;
-
-    public OrderItem() {
+    public Orderitem() {
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
     public Order getOrder() {
         return order;
     }
@@ -33,28 +62,11 @@ public class OrderItem {
         this.order = order;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderItem{" +
-                ", order=" + order +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
     }
 }

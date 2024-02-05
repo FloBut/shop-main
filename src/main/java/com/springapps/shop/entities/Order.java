@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -15,20 +17,40 @@ public class Order {
     @Column
     private Double totalPrice;
 
-    @OneToMany (mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonManagedReference("order-orderItem")
-    private List<OrderItem> orderItems;
-
-    @OneToMany (mappedBy = "order",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JsonManagedReference("order-cartItem")
-    private List<CartItem> cartItems;
-
     @ManyToOne
-    @JsonBackReference("user-order")
     @JoinColumn(name = "user_id")
+    @JsonBackReference("order-user")
     private User user;
 
+    @OneToMany(mappedBy = "order",  cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @JsonManagedReference("orderitem-order")
+    private List<Orderitem> orderItems;
+
+    @Column
+    private LocalDateTime createdAt;
+
     public Order() {
+    }
+
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Order(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -39,11 +61,20 @@ public class Order {
         this.id = id;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Orderitem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<Orderitem> orderItems) {
+        this.orderItems = orderItems;
     }
 }
